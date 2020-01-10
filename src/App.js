@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux'
 import "jquery/dist/jquery.js";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap/dist/js/bootstrap.js";
 import logo from './logo.svg';
 import './App.css';
-import { addUser, deleteUser, editUser } from './components/redux/actions.js'
+import { addUser, deleteUser, editUser ,Fetch_Data } from './components/redux/actions.js'
 import { fetchUser } from "./network/api.fetch"
 
 const App = () => {
@@ -21,22 +21,31 @@ const App = () => {
   console.log({ userdata })
 
   const dispatch = useDispatch();
-
+  useEffect(() => {
+    fetchuser_api()
+  },[])
+  const fetchuser_api = () => {
+    const fetchData = fetchUser({})
+    fetchData.then(res=>res.json())
+    .then(data=>{
+      dispatch(Fetch_Data(data))
+    })
+  }
   const adduser = event => {
     event.preventDefault()
     const addValue = { id: userdata.length + 1, name: name, email: email, password: password }
 
     // test with fetch, actually insert api here
     const dataResulted = fetchUser({})
-    dataResulted.then(res=> res.json())
-    .then(data => {
-    console.log("DataTest: ", data)
-      dispatch(addUser(addValue))
-      setName('')
-      setEmail('')
-      setPassword('')
-    })
-    .catch(error => console.error("error", error))
+    dataResulted.then(res => res.json())
+      .then(data => {
+        console.log("DataTest: ", data)
+        dispatch(addUser(addValue))
+        setName('')
+        setEmail('')
+        setPassword('')
+      })
+      .catch(error => console.error("error", error))
 
   }
   const edituser = event => {

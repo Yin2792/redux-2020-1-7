@@ -1,4 +1,9 @@
-import { Add_USER, Delete_User, Edit_User } from './actionTypes'
+import { Fetch_User, Add_USER, Delete_User, Edit_User } from './actionTypes'
+
+export const Fetch_Data = fetchData=>({
+    type:Fetch_User,
+    payload:fetchData
+})
 
 export const addUser = addvalue => ({
     type: Add_USER,

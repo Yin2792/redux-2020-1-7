@@ -1,24 +1,6 @@
-import { Add_USER, Delete_User, Edit_User } from '../../../components/redux/actionTypes'
+import { Add_USER, Delete_User, Edit_User, Fetch_User } from '../../../components/redux/actionTypes'
 const initialState = {
   userData: [
-    {
-      id: "1",
-      name: "charles",
-      email: "charles@gmail.com",
-      password: "123"
-    },
-    {
-      id: "2",
-      name: "starry",
-      email: "starry@gmail.com",
-      password: "234"
-    },
-    {
-      id: "3",
-      name: "donkey",
-      email: "donkey@gmail.com",
-      password: "542"
-    }
 
 
   ]
@@ -27,7 +9,9 @@ const initialState = {
 const IndexReducer = (state = initialState, action) => {
   console.log(action.payload)
   switch (action.type) {
-
+    case Fetch_User: {
+     return {...state,userData:action.payload}
+    }
     case Add_USER: {
       return { ...state, userData: [...state.userData, action.payload] }
     }
